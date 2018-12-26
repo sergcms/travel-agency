@@ -25,6 +25,17 @@ class TourController extends Controller
         return view('tour', ['tours' => $tours]);
     }
 
+    protected function validator(Request $request)
+    {
+        return $this->validate($request, [
+            'country' => ['required', 'string', 'min:3', 'max:50'],
+            'city' => ['required', 'string', 'min:3', 'max:50'],
+            'hotel' => ['required', 'string', 'min:3', 'max:100'],
+            'people' => ['required', 'numeric'],
+            'price' => ['required', 'numeric'], 
+        ]);
+    }
+
     public function showForm()
     {
         return view('forms.tour-create');
@@ -32,6 +43,8 @@ class TourController extends Controller
 
     public function create(Request $request)
     {
+        $this->validator($request);
+        
         Tour::create([
             'country' => $request->country, 
             'city' => $request->city, 
@@ -62,6 +75,8 @@ class TourController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validator($request);
+        
         Tour::where('id', $id)
             ->update([
                 'country' => $request->country, 

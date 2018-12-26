@@ -97,8 +97,8 @@
                         </div>
                     @elseif (auth()->user()->role->name == 'agent')
                         <div class="links">
-                            <a href="{{ route('tour') }}">View Tours</a>
                             <a href="{{ route('view-users') }}">View Clients</a>
+                            <a href="{{ route('tour') }}">View Tours</a>
                         </div>
                     @elseif (auth()->user()->role->name == 'client')
                         <div class="links">

@@ -26,17 +26,19 @@ class TravelAgencyController extends Controller
         return view('agency', ['agencies' => $agencies]);
     }
 
-    protected function validator(array $data)
+    protected function validator(Request $request)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:travel_agencies'],
+        return $this->validate($request, [
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required', 'numeric', 'min:10'],
         ]);
     }
 
     public function create(Request $request)
     {
+        $this->validator($request);      
+                
         TravelAgency::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -56,6 +58,8 @@ class TravelAgencyController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validator($request);
+        
         TravelAgency::where('id', $id)
             ->update([
             'name' => $request->name,

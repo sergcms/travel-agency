@@ -27,7 +27,7 @@
                 <th>Status</th>
                 @if (auth()->user()->role->name != 'client')
                     <th>Client name</th>
-                    <th>Controls</th>
+                    <th>Edit</th>
                 @endif
             </tr>
             </thead>
@@ -47,8 +47,8 @@
                     @if (auth()->user()->role->name != 'client')
                         <td>{{ $tour->name }}</td>
                         <td>
-                            <a href="{{ route('tour-edit', [$tour->tour_id]) }}" class="btn btn-secondary mr-2">Edit tour</a>
-                            <a href="{{ route('assign-edit', [$tour->user_tour_id]) }}" class="btn btn-secondary mr-2">Edit assign</a>
+                            <a href="{{ route('tour-edit', [$tour->tour_id]) }}" class="btn btn-secondary mr-2">Tour</a>
+                            <a href="{{ route('assign-edit', [$tour->user_tour_id]) }}" class="btn btn-secondary mr-2">Assign</a>
                         </td>
                     @endif
                 </tr>
