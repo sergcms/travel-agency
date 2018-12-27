@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Agent;
+namespace App\Http\Controllers;
 
 use App\Tour;
 use Illuminate\Http\Request;
@@ -22,7 +22,19 @@ class TourController extends Controller
             ->rightjoin('tours', 'tours.id', '=', 'users_tours.tour_id')
             ->get();
 
-        return view('tour', ['tours' => $tours]);
+        return view('tours', ['tours' => $tours]);
+    }
+
+    public function listToursClient()
+    {
+        $tours = DB::table('users_tours')
+            ->select('users_tours.id as user_tour_id', 'users.*', 'tours.id as tour_id', 'tours.*')
+            ->rightjoin('users', 'users.id', '=', 'users_tours.user_id')
+            ->rightjoin('tours', 'tours.id', '=', 'users_tours.tour_id')
+            ->where('users.id', auth()->user()->id)
+            ->get();
+
+        return view('tours', ['tours' => $tours]);
     }
 
     protected function validator(Request $request)
@@ -36,9 +48,21 @@ class TourController extends Controller
         ]);
     }
 
-    public function showForm()
+    public function showForm($id = '')
     {
-        return view('forms.tour-create');
+        $collectionStatus = [
+            'Waiting payment',
+            'Paid',
+            'Completed',
+        ];
+
+        if ($id) {
+            $tour = Tour::find($id);
+
+            return view('form.tour', ['tour' => $tour, 'id' => $id, 'collectionStatus' => $collectionStatus]);
+        }
+        
+        return view('form.tour', ['collectionStatus' => $collectionStatus]);
     }
 
     public function create(Request $request)
@@ -57,20 +81,7 @@ class TourController extends Controller
             'status' => $request->status, 
         ]);
 
-        return redirect(route('tour'));
-    }
-
-    public function editForm($id)
-    {
-        $tour = Tour::findorFail($id);
-
-        $collectionStatus = [
-            'Waiting payment',
-            'Paid',
-            'Completed',
-        ];
-
-        return view('forms.tour-edit', ['tour' => $tour, 'id' => $id, 'collectionStatus' => $collectionStatus]);
+        return redirect(route('tours'));
     }
 
     public function update(Request $request, $id)
@@ -90,6 +101,6 @@ class TourController extends Controller
                 'status' => $request->status, 
             ]);
 
-        return redirect(route('tour'));
+        return redirect(route('tours'));
     }
 }

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-between align-items-start">
         <h2>Users</h2>
-        @if (auth()->user()->role->name == 'admin')
+        @if (auth()->user()->role == 'admin')
             <a href="{{ route('user-create') }}" class="btn btn-info text-white">Create user</a>
         @endif
     </div>
@@ -18,7 +18,7 @@
                 <th>Role</th>
                 <th>Blocked</th>
                 <th>Travel agency ID</th>
-                @if (auth()->user()->role->name == 'admin')
+                @if (auth()->user()->role == 'admin')
                     <th>Controls</th>
                 @endif
             </tr>
@@ -32,7 +32,7 @@
                     <td>{{ $user->role }} </td>
                     <td>{{ $user->block == 0 ? '-' : 'blocked' }}</td>
                     <td>{{ $user->travel_agency_id }} </td>
-                    @if (auth()->user()->role->name == 'admin')
+                    @if (auth()->user()->role == 'admin')
                         <td>
                             <a href="{{ route('user-edit', [$user->id]) }}" class="btn btn-secondary mr-2">Edit</a>
                             {{-- <a href="{{ route('user-delete', [$user->id]) }}" class="btn btn-danger" onclick='return confirm("Are you sure you want to delete?")'>Delete</a> --}}

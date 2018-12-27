@@ -8,9 +8,15 @@ use App\UsersTour;
 
 class UsersTourController extends Controller
 {
-    public function showForm()
+    public function showForm($id = '')
     {
-        return view('forms.users-tours-create');
+        if ($id) {
+            $assign = UsersTour::find($id);
+
+            return view('form.users-tours', ['assign' => $assign, 'id' => $id]);
+        }
+
+        return view('form.users-tours');
     }
 
     public function create(Request $request)
@@ -20,14 +26,7 @@ class UsersTourController extends Controller
             'tour_id' => $request->tour_id,
         ]);
         
-        return redirect(route('tour'));
-    }
-
-    public function editForm($id)
-    {
-        $assign = UsersTour::find($id);
-
-        return view('forms.users-tours-edit', ['assign' => $assign, 'id' => $id]);
+        return redirect(route('tours'));
     }
 
     public function update(Request $request, $id)
@@ -38,6 +37,6 @@ class UsersTourController extends Controller
                 'tour_id' => $request->tour_id,
             ]);
         
-        return redirect(route('tour'));
+        return redirect(route('tours'));
     }
 }

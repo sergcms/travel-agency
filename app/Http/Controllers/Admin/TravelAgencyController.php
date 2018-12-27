@@ -14,16 +14,22 @@ class TravelAgencyController extends Controller
         return view('welcome');
     }
     
-    public function showForm()
+    public function showForm($id = '')
     {
-        return view('forms.agency-create');
+        if ($id) {
+            $agency = TravelAgency::find($id);
+
+            return view('form.agency', ['agency' => $agency, 'id' => $id]);
+        }
+
+        return view('form.agency');
     }
     
     public function list()
     {
         $agencies = TravelAgency::all();
 
-        return view('agency', ['agencies' => $agencies]);
+        return view('agencies', ['agencies' => $agencies]);
     }
 
     protected function validator(Request $request)
@@ -46,14 +52,7 @@ class TravelAgencyController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return redirect(route('agency'));
-    }
-
-    public function editForm($id)
-    {
-        $agency = TravelAgency::find($id);
-        
-        return view('forms.agency-edit', ['agency' => $agency, 'id' => $id]);
+        return redirect(route('agencies'));
     }
 
     public function update(Request $request, $id)
@@ -68,13 +67,13 @@ class TravelAgencyController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return redirect(route('agency'));
+        return redirect(route('agencies'));
     }
 
     public function delete($id)
     {
-        TravelAgency::findorFail($id)->delete();
+        TravelAgency::findOrFail($id)->delete();
         
-        return redirect(route('agency'));
+        return redirect(route('agencies'));
     }
 }

@@ -12,6 +12,7 @@
             <tr>
                 <th>ID</th>
                 <th>Travel agency</th>
+                <th>Address</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Controls</th>
@@ -22,6 +23,7 @@
                 <tr>
                     <td>{{ $agency->id }}</td>
                     <td>{{ $agency->name }}</td>
+                    <td>{{ $agency->address }} </td>
                     <td>{{ $agency->email }} </td>
                     <td>{{ $agency->phone }} </td>
                     <td>

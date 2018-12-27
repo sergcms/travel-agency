@@ -90,17 +90,17 @@
                 </div>
 
                 @auth
-                    @if (auth()->user()->role->name == 'admin')
+                    @if (auth()->user()->role == 'admin')
                         <div class="links">
-                            <a href="{{ route('user') }}">Users</a>
-                            <a href="{{ route('agency') }}">Travel agencies</a>
+                            <a href="{{ route('users') }}">Users</a>
+                            <a href="{{ route('agencies') }}">Travel agencies</a>
                         </div>
-                    @elseif (auth()->user()->role->name == 'agent')
+                    @elseif (auth()->user()->role == 'agent')
                         <div class="links">
                             <a href="{{ route('view-users') }}">View Clients</a>
-                            <a href="{{ route('tour') }}">View Tours</a>
+                            <a href="{{ route('tours') }}">View Tours</a>
                         </div>
-                    @elseif (auth()->user()->role->name == 'client')
+                    @elseif (auth()->user()->role == 'client')
                         <div class="links">
                             <a href="{{ route('view-tours') }}">View tours</a>
                         </div>

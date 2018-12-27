@@ -14,10 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $roles = ['admin', 'agent', 'client'];
         
-        foreach ($roles as $role) {
-            Role::create(['name' => $role]);
-        }
-
         App\TravelAgency::create([
             'name' => 'Travel Agency 1',
             'email' => 'travel-agency-1@gmail.com',
@@ -36,14 +32,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('1234567'),
-            'role_id' => '1', 
+            'role' => $roles[0], 
         ]);
 
         App\User::create([
             'name' => 'agent',
             'email' => 'agent@gmail.com',
             'password' => Hash::make('1234567'),
-            'role_id' => '2', 
+            'role' => $roles[1], 
             'travel_agency_id' => '1',
         ]);
 
@@ -51,7 +47,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'user-1',
             'email' => 'user-1@gmail.com',
             'password' => Hash::make('1234567'),
-            'role_id' => '3', 
+            'role' => $roles[2], 
             'travel_agency_id' => '1',
         ]);
 
@@ -59,7 +55,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'user-2',
             'email' => 'user-2@gmail.com',
             'password' => Hash::make('1234567'),
-            'role_id' => '3', 
+            'role' => $roles[2], 
             'travel_agency_id' => '1',
         ]);
 
@@ -67,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'user-3',
             'email' => 'user-3@gmail.com',
             'password' => Hash::make('1234567'),
-            'role_id' => '3', 
+            'role' => $roles[2], 
             'travel_agency_id' => '2',
         ]);
 
@@ -75,7 +71,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'user-4',
             'email' => 'user-4@gmail.com',
             'password' => Hash::make('1234567'),
-            'role_id' => '3', 
+            'role' => $roles[2], 
             'block' => true,
             'travel_agency_id' => '2',
         ]);

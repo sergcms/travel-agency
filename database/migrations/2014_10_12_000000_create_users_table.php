@@ -20,8 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('block')->default(0);
-            $table->unsignedInteger('role_id')->default(3);
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->enum('role', ['admin', 'agent', 'client'])->default('client');
             $table->unsignedInteger('travel_agency_id')->nullable();
             $table->foreign('travel_agency_id')->references('id')->on('travel_agencies');
             $table->rememberToken();

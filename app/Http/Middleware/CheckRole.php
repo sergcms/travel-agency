@@ -16,8 +16,8 @@ class CheckRole
      * @return mixed
      */
     public function handle($request, Closure $next, $role)
-    {
-        if (auth()->user()->role->name !== $role) {
+    {   
+        if (auth()->user()->role !== $role) {
             return redirect('/');
         }
 

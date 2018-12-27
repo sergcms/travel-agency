@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,12 +11,17 @@ class UserController extends Controller
 {
     public function list()
     {
-        $users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
-            ->select('users.*','roles.name as role')
-            ->orderBy('id', 'asc')
+        $users = User::all();
+
+        return view('users', ['users' => $users]);
+    }
+
+    public function listAgentUsers()
+    {
+        $users = User::where('role', '!=', 'admin')
             ->get();
 
-        return view('user', ['users' => $users]);
+        return view('users', ['users' => $users]);
     }
 
     public function create(Request $request)
@@ -26,26 +30,28 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => (int)$request->role, 
+            'role' => $request->role, 
             'travel_agency_id' => !(int)$request->travel_agency_id ? null : (int)$request->travel_agency_id,
         ]);
 
-        return redirect(route('user'));
+        return redirect(route('users'));
     }
 
-    public function showForm()
+    public function showForm($id = '')
     {
-        $roles = Role::all();
+        $roles = [
+            'admin', 
+            'agent', 
+            'client',
+        ];
+        
+        if ($id) {
+            $user = User::find($id);
 
-        return view('forms.user-create', ['roles' => $roles]);
-    }
+            return view('form.user', ['user' => $user, 'id' => $id, 'roles' => $roles, 'isblock' => $user->block]);
+        }
 
-    public function editForm($id)
-    {
-        $user = User::find($id);
-        $roles = Role::all();
-
-        return view('forms.user-edit', ['user' => $user, 'id' => $id, 'roles' => $roles]);
+        return view('form.user', ['roles' => $roles, 'isblock' => 0]);
     }
 
     public function update(Request $request, $id)
@@ -55,18 +61,18 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => (int)$request->role, 
+            'role' => $request->role, 
             'travel_agency_id' => !(int)$request->travel_agency_id ? null : (int)$request->travel_agency_id,
             'block' => $request->block === '1' ? 1 : 0,
         ]);
 
-        return redirect(route('user'));
+        return redirect(route('users'));
     }
    
     public function delete($id)
     {
         User::find($id)->delete();
         
-        return redirect(route('user'));
+        return redirect(route('users'));
     }
 }

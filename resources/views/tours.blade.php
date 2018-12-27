@@ -5,7 +5,7 @@
     <div class="row justify-content-between align-items-start">
         <h2>Tours</h2>
         <div>
-            @if (auth()->user()->role->name != 'client')
+            @if (auth()->user()->role != 'client')
                 <a href="{{ route('tour-create') }}" class="btn btn-info text-white">Create tour</a>
                 <a href="{{ route('assign-create') }}" class="btn btn-info text-white">Create assign</a>
             @endif
@@ -25,7 +25,7 @@
                 <th>Date start</th>
                 <th>Date end</th>
                 <th>Status</th>
-                @if (auth()->user()->role->name != 'client')
+                @if (auth()->user()->role != 'client')
                     <th>Client name</th>
                     <th>Edit</th>
                 @endif
@@ -44,7 +44,7 @@
                     <td>{{ $tour->date_start }} </td>
                     <td>{{ $tour->date_end }} </td>
                     <td>{{ $tour->status }} </td>
-                    @if (auth()->user()->role->name != 'client')
+                    @if (auth()->user()->role != 'client')
                         <td>{{ $tour->name }}</td>
                         <td>
                             <a href="{{ route('tour-edit', [$tour->tour_id]) }}" class="btn btn-secondary mr-2">Tour</a>
