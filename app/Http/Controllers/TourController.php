@@ -48,7 +48,7 @@ class TourController extends Controller
         ]);
     }
 
-    public function showForm($id = '')
+    public function show($id = '')
     {
         $collectionStatus = [
             'Waiting payment',

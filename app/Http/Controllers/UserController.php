@@ -9,6 +9,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function validUniqueEmail(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'email' => ['required', 'unique:users'],
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+        return '';
+    }
+    
     public function list()
     {
         $users = User::all();
@@ -37,7 +50,7 @@ class UserController extends Controller
         return redirect(route('users'));
     }
 
-    public function showForm($id = '')
+    public function show($id = '')
     {
         $roles = [
             'admin', 

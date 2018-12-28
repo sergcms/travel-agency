@@ -14,7 +14,7 @@ class TravelAgencyController extends Controller
         return view('welcome');
     }
     
-    public function showForm($id = '')
+    public function show($id = '')
     {
         if ($id) {
             $agency = TravelAgency::find($id);

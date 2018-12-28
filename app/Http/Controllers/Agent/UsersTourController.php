@@ -8,7 +8,7 @@ use App\UsersTour;
 
 class UsersTourController extends Controller
 {
-    public function showForm($id = '')
+    public function show($id = '')
     {
         if ($id) {
             $assign = UsersTour::find($id);

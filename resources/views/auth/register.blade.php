@@ -6,6 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
+                <div class="alert alert-danger" style="display:none"></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -36,6 +37,10 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                             </div>
                         </div>
 
@@ -75,3 +80,7 @@
     </div>
 </div>
 @endsection
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="{{ asset('js/valid-email.js')  }}"></script>
