@@ -16,10 +16,10 @@ class UserController extends Controller
         ]);
         
         if ($validator->fails()) {
-            return response()->json(['errors'=>$validator->errors()->all()]);
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
 
-        return '';
+        return response()->json([]);
     }
     
     public function list()
