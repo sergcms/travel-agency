@@ -21,10 +21,14 @@ class UsersTourController extends Controller
 
     public function create(Request $request)
     {
-        UsersTour::create([
-            'user_id' => $request->user_id,
-            'tour_id' => $request->tour_id,
-        ]);
+        try {
+            UsersTour::create([
+                'user_id' => $request->user_id,
+                'tour_id' => $request->tour_id,
+            ]);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
         
         return redirect(route('tours'));
     }

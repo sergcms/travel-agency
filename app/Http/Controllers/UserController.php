@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,8 +12,8 @@ class UserController extends Controller
 {
     public function validUniqueEmail(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
-            'email' => ['required', 'unique:users'],
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|unique:users',
         ]);
         
         if ($validator->fails()) {

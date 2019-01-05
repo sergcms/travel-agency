@@ -34,11 +34,11 @@ class TravelAgencyController extends Controller
 
     protected function validator(Request $request)
     {
-        return $this->validate($request, [
+        return Validator::make($request->all(), [
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required', 'numeric', 'min:10'],
-        ]);
+        ])->validate();
     }
 
     public function create(Request $request)

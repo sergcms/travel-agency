@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,13 +40,13 @@ class TourController extends Controller
 
     protected function validator(Request $request)
     {
-        return $this->validate($request, [
-            'country' => ['required', 'string', 'min:3', 'max:50'],
-            'city' => ['required', 'string', 'min:3', 'max:50'],
-            'hotel' => ['required', 'string', 'min:3', 'max:100'],
-            'people' => ['required', 'numeric'],
-            'price' => ['required', 'numeric'], 
-        ]);
+        return Validator::make($request->all(), [
+            'country' => 'required|string|min:3|max:50',
+            'city' => 'required|string|min:3|max:50',
+            'hotel' => 'required|string|min:3|max:100',
+            'people' => 'required|numeric',
+            'price' => 'required|numeric', 
+        ])->validate();
     }
 
     public function show($id = '')
